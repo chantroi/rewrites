@@ -15,11 +15,9 @@ def reload_messages(st):
         elif m["type"] == "audio":
             user.audio(m["content"])
             
-def prompt(st):
+def prompt(name, st):
     if text := st.chat_input("Write"):
-        st.session_state.messages.append({"role": "user", "content": text})
-        st.session_state.messages.append({"role": "bot", "content": text,
-        "type": "text"})
+        st.session_state.messages.append({"user": name, "content": text})
         with st.chat_message("user"):
             st.write(text)
             
