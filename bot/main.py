@@ -10,7 +10,7 @@ api_id = res["key"]["api_id"]
 api_hash = res["key"]["api_hash"]
 bot_token = res["bot"]["ai_tg"]
 
-bot = Client("bot", api_id, api_hash, bot_token=bot_token)
+bot = Client("bot", api_id, api_hash, bot_token=bot_token, in_memory=True)
 app = FastAPI()
 client: WebSocket = None
 
