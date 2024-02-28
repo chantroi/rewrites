@@ -10,8 +10,7 @@ def websocket(st):
         while True:
             message = ws.recv()
             m = json.loads(message)
-            st.session_state.messages.append({"user": m["name"], "content":
-            m["content"], "type": m["type"]})
+            st.session_state.messages.append(m)
             with st.chat_message(m["user"]):
                 if m["type"] == "video":
                     st.video(m["content"])
