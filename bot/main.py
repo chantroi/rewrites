@@ -15,6 +15,7 @@ bot = Client("bot", api_id, api_hash, bot_token=bot_token, in_memory=True)
 server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server.bind(("127.0.0.1", 8000))
 client = None
+
 def tcp():
     global client
     server.listen()
