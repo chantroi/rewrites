@@ -4,3 +4,4 @@ tgcrypto
 hydrogram
 streamlit
 websockets
+requests
