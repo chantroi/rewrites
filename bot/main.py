@@ -67,7 +67,8 @@ async def on_message(c, m):
             content=content,
             type="image"
         )
-    await client.send_json(data)
+        data = str(data).encode('utf-8')
+    await client.send(data)
 
 if __name__ == "__main__":
     uvicorn_thread = Thread(target=tcp)
