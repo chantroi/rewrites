@@ -26,6 +26,9 @@ class Bot:
             elif m.sticker:
                 handle_image(m)
                 
+    def bot(self):
+        return self.bot
+                
     def run(self):
         self.commands()
         self.bot.run()
