@@ -1,7 +1,6 @@
 from hydrogram import Client
-from fastapi import FastAPI, Request, WebSocket
 from threading import Thread
-import uvicorn
+import socket
 import requests
 import os
 
