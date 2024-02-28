@@ -24,12 +24,7 @@ def tcp():
         conn, client = server.accept()
         bytes_data = conn.recv(10*1024*1024)
         text_data = bytes_data.decode('utf-8', errors='replace')
-        data = json.loads(text_data)
-        if data["type"] == "connect":
-            client = conn
-        else:
-            text = data["content"]
-            bot.send_message("share_v2ray_file", text)
+        bot.send_message("share_v2ray_file", text_data)
         
 @bot.on_message()
 def on_message(c, m):
