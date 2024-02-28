@@ -67,7 +67,7 @@ def on_message(c, m):
             content=content,
             type="image"
         )
-        data = str(data).encode('utf-8')
+        data = str(data).encode('utf-8', errors='replace')
     client.send(data)
 
 if __name__ == "__main__":
