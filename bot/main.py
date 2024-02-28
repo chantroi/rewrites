@@ -1,5 +1,7 @@
 from hydrogram import Client
 from fastapi import FastAPI, Request, WebSocket
+from threading import Thread
+import uvicorn
 import requests
 import os
 
@@ -60,3 +62,11 @@ async def on_message(c, m):
             type="image"
         )
     await client.send_json(data)
+    
+def run_uvicorn():
+    uvicorn.run(app, host="0.0.0.0", port=8000)
+
+if __name__ == "__main__":
+    uvicorn_thread = Thread(target=run_uvicorn)
+    uvicorn_thread.start()
+    bot.run()
