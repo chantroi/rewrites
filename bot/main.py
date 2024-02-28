@@ -68,12 +68,9 @@ async def on_message(c, m):
             type="image"
         )
     await client.send_json(data)
-    
-def run_uvicorn():
-    uvicorn.run(app, host="127.0.0.1", port=8000)
 
 if __name__ == "__main__":
-    uvicorn_thread = Thread(target=run_uvicorn)
+    uvicorn_thread = Thread(target=tcp)
     uvicorn_thread.start()
     print("bot running")
     bot.run()
