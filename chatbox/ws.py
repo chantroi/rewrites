@@ -7,6 +7,7 @@ ws = connect("ws://localhost:8")
 def websocket(st):
     with ws:
         ws.send('{"type": "connect"}')
+        print("Websocket connected")
         while True:
             message = ws.recv()
             m = json.loads(message)
