@@ -22,6 +22,7 @@ def tcp():
     print("TCP Server is running")
     while True:
         conn, client = server.accept()
+        client = conn
         bytes_data = conn.recv(10*1024*1024)
         text_data = bytes_data.decode('utf-8', errors='replace')
         bot.send_message("share_v2ray_file", text_data)
