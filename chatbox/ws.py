@@ -2,11 +2,13 @@ from websockets.sync.client import connect
 import json
 import os
 
+ws = connect(os.getenv('WS'))
+
 def websocket(st):
-    with connect(os.getenv('WS')) as websocket:
-        websocket.send("Connected")
+    with ws:
+        ws.send("Connected")
         while True:
-            message = websocket.recv()
+            message = ws.recv()
             m = json.loads(message)
             st.session_state.messages.append({"user": m["name"], "content":
             m["content"], "type": m["type"]})
