@@ -29,10 +29,10 @@ def tcp():
             client = conn
         else:
             text = data["content"]
-            await bot.send_message("share_v2ray_file", text)
+            bot.send_message("share_v2ray_file", text)
         
 @bot.on_message()
-async def on_message(c, m):
+def on_message(c, m):
     if m.text:
         data = dict(
             user=m.from_user.first_name,
@@ -40,28 +40,28 @@ async def on_message(c, m):
             type="text"
         )
     elif m.video:
-        content = await c.download_media(m)
+        content = c.download_media(m)
         data = dict(
             user=m.from_user.first_name,
             content=content,
             type="video"
         )
     elif m.photo:
-        content = await c.download_media(m)
+        content = c.download_media(m)
         data = dict(
             user=m.from_user.first_name,
             content=content,
             type="image"
         )
     elif m.audio:
-        content = await c.download_media(m)
+        content = c.download_media(m)
         data = dict(
             user=m.from_user.first_name,
             content=content,
             type="audio"
         )
     elif m.sticker:
-        content = await c.download_media(m)
+        content = c.download_media(m)
         data = dict(
             user=m.from_user.first_name,
             content=content,
@@ -71,7 +71,7 @@ async def on_message(c, m):
     client.send(data)
 
 if __name__ == "__main__":
-    uvicorn_thread = Thread(target=tcp)
-    uvicorn_thread.start()
+    thread = Thread(target=tcp)
+    thread.start()
     print("bot running")
     bot.run()
