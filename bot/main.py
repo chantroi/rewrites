@@ -19,7 +19,7 @@ client = None
 def tcp():
     global client
     server.listen()
-    print("Server is running")
+    print("TCP Server is running")
     while True:
         conn, client = server.accept()
         bytes_data = conn.recv(10*1024*1024)
