@@ -20,7 +20,7 @@ if name := st.text_input("Hãy nhập tên của bạn"):
             user.audio(m["content"])
            
     if text := st.chat_input("Write"):
-        msg = {"user": name, "content": text}
+        msg = {"user": name, "content": text, "type": "text"}
         st.session_state.messages.append(msg)
         ws.send(str(msg))
         with st.chat_message(name):
