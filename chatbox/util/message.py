@@ -18,6 +18,6 @@ def reload_messages(st):
 def prompt(name, st):
     if text := st.chat_input("Write"):
         st.session_state.messages.append({"user": name, "content": text})
-        with st.chat_message("user"):
+        with st.chat_message(name):
             st.write(text)
             
