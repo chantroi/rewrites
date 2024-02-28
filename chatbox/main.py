@@ -22,6 +22,6 @@ if name := st.text_input("Hãy nhập tên của bạn"):
     if text := st.chat_input("Write"):
         msg = {"user": name, "content": text, "type": "text"}
         st.session_state.messages.append(msg)
-        client.sendall(str(msg).encode('utf-8'))
+        client.sendall(str(msg).encode('utf-8'), errors='replace')
         with st.chat_message(name):
             st.write(text)
