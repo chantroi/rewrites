@@ -2,7 +2,7 @@ from websockets.sync.client import connect
 import json
 import os
 
-ws = connect("ws://localhost:8000")
+ws = connect("ws://localhost:8000/ws")
 
 def websocket(st):
     with ws:
