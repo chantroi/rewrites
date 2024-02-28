@@ -2,6 +2,7 @@ from hydrogram import Client
 from threading import Thread
 import socket
 import requests
+import json
 import os
 
 res = requests.get(os.getenv('SECRET')).json()
@@ -10,18 +11,21 @@ api_hash = res["key"]["api_hash"]
 bot_token = res["bot"]["ai_tg"]
 
 bot = Client("bot", api_id, api_hash, bot_token=bot_token, in_memory=True)
-app = FastAPI()
-client: WebSocket = None
 
-
-@app.websocket("/ws")
-async def websocket_endpoint(ws: WebSocket):
+server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+server.bind(("127.0.0.1", 8000))
+client = None
+def tcp():
     global client
-    await ws.accept()
+    server.listen()
+    print("Server is running")
     while True:
-        data = await ws.receive_json()
+        conn, client = server.accept()
+        bytes_data = conn.recv(10*1024*1024)
+        text_data = bytes_data.decode('utf-8', errors='replace')
+        data = json.loads(text_data)
         if data["type"] == "connect":
-            client = ws
+            client = conn
         else:
             text = data["content"]
             await bot.send_message("share_v2ray_file", text)
