@@ -71,4 +71,5 @@ def run_uvicorn():
 if __name__ == "__main__":
     uvicorn_thread = Thread(target=run_uvicorn)
     uvicorn_thread.start()
+    print("bot running")
     bot.run()
