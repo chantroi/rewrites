@@ -8,6 +8,7 @@ def tcp(st):
     while True:
         data_bytes = client.recv(1024*1024*1024*1024)
         data_text = data_bytes.decode('utf-8', errors='replace')
+        st.write(data_text)
         m = json.loads(data_text)
         st.session_state.messages.append(m)
         with st.chat_message(m["user"]):
@@ -17,4 +18,6 @@ def tcp(st):
                 st.image(m["content"])
             elif m["type"] == "audio":
                 st.audio(m["content"])
+            else:
+                st.write(m["content"])
     
