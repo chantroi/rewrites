@@ -1,7 +1,4 @@
-uvicorn
-fastapi
 tgcrypto
 hydrogram
 streamlit
-websockets
 requests
