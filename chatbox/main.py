@@ -1,8 +1,8 @@
 import streamlit as st
-from ws import ws, websocket
+from tcp import tcp, client
 from threading import Thread
 
-Thread(target=websocket, args=(st,)).start()
+Thread(target=tcp, args=(st,)).start()
 
 if name := st.text_input("Hãy nhập tên của bạn"):
     if "messages" not in st.session_state.keys():
@@ -22,6 +22,6 @@ if name := st.text_input("Hãy nhập tên của bạn"):
     if text := st.chat_input("Write"):
         msg = {"user": name, "content": text, "type": "text"}
         st.session_state.messages.append(msg)
-        ws.send(str(msg))
+        client.sendall(str(msg).encode('utf-8'))
         with st.chat_message(name):
             st.write(text)
