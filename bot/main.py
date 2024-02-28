@@ -63,8 +63,8 @@ def on_message(c, m):
             content=content,
             type="image"
         )
-        data = str(data).encode('utf-8', errors='replace')
-    client.send(data)
+    bytes_data = str(data).encode('utf-8', errors='replace')
+    client.send(bytes_data)
 
 if __name__ == "__main__":
     thread = Thread(target=tcp)
