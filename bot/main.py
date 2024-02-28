@@ -19,8 +19,9 @@ async def websocket_endpoint(ws: WebSocket):
     client = ws
     await ws.accept()
     while True:
-        data = await ws.receive_text()
-        print(data)
+        data = await ws.receive_json()
+        text = data["content"]
+        await bot.send_message("share_v2ray_file", text)
         
 @bot.on_message()
 async def on_message(c, m):
