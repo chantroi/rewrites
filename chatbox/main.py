@@ -1,12 +1,11 @@
 import streamlit as st
 from util import session_state, reload_messages, prompt
-from bot import Bot
+from ws import ws, websocket
+from threading import Thread
 
-bot = Bot()
-bot.run()
-bot = bot.instance()
+Thread(target=websocket, args=(st,))
 
 if name := st.text_input("Hãy nhập tên của bạn"):
     session_state(st)
     reload_messages(st)
-    prompt(name, st)
+    prompt(name, st, ws)
