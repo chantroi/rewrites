@@ -18,12 +18,14 @@ client: WebSocket = None
 @app.websocket("/ws")
 async def websocket_endpoint(ws: WebSocket):
     global client
-    client = ws
     await ws.accept()
     while True:
         data = await ws.receive_json()
-        text = data["content"]
-        await bot.send_message("share_v2ray_file", text)
+        if data["type"] == "connect":
+            client = ws
+        else:
+            text = data["content"]
+            await bot.send_message("share_v2ray_file", text)
         
 @bot.on_message()
 async def on_message(c, m):
