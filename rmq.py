@@ -34,10 +34,10 @@ class Consumer:
         self.connection.close()
         
     def get(self):
-        if self.data:
-            data = self.data
-            self.data = None
-            return data.decode()
+        while True:
+            if self.data:
+                yield self.data.decode()
+                self.data = None
 
 class Deliver:
     def __init__(self):
