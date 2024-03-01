@@ -1,2 +1,2 @@
-import server.wsgi.app as wsgi_app
-import server.asgi.app as asgi_app
+from  server.wsgi import app as wsgi_app
+from server.asgi import app as asgi_app
