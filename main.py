@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.responses import StreamingResponse, RedirectResponse
-from rmq import Consumer, Deliver
+from rmq import Consumer, publish
 from threading import Thread
 
 app = FastAPI()
@@ -17,6 +17,5 @@ async def consumer_rt():
     
 @app.route("/producer", methods=["GET", "POST"])
 async def producer_rt(data: str):
-    deliver = Deliver()
-    deliver.send_text(data)
+    publish(data)
     return "Done"
