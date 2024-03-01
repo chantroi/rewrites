@@ -21,11 +21,11 @@ class MQ:
         
     def run(self):
         self.connection.ioloop.run_forever()
-        try:
-            self.channel.start_consuming()
-        except KeyboardInterrupt:
-            self.channel.stop_consuming()
-        self.connection.close()
+        # try:
+#             self.channel.start_consuming()
+#         except KeyboardInterrupt:
+#             self.channel.stop_consuming()
+        #self.connection.close()
     
     def on_message(self, chan, method_frame, header_frame, body, userdata=None):
         self.value = body
