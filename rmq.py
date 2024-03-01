@@ -1,6 +1,7 @@
 import pika
 import functools
 from pika import DeliveryMode
+from pika.adapters.asyncio_connection import AsyncioConnection
 from pika.exchange_type import ExchangeType
 from env import mq_host, mq_user, mq_pw, mq_vhost
     
@@ -8,7 +9,7 @@ class MQ:
     def __init__(self):
         credentials = pika.PlainCredentials(mq_user, mq_pw)
         parameters = pika.ConnectionParameters(mq_host, 5672, mq_vhost, credentials=credentials)
-        self.connection = pika.AsyncioConnection(parameters)
+        self.connection = AsyncioConnection(parameters)
         self.channel = self.connection.channel()
         self.channel.queue_declare(queue='standard', auto_delete=True)
         self.channel.queue_bind(queue='standard', exchange='consume', routing_key='standard_key')
