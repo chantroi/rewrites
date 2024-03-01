@@ -10,4 +10,4 @@ while True:
     if text.startswith("c:"):
         print(next(consumer.get()))
     else:
-        deliver.send(input("Deliver: "))
+        deliver.send(text)
