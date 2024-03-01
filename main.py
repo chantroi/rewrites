@@ -4,7 +4,7 @@ from util.sse import ServerSentEvent
 from rmq import Consumer, publish
 from threading import Thread
 
-app = Quart()
+app = Quart(__name__)
 cors(app, allow_origin=["*"])
 consumer = Consumer()
 Thread(target=consumer.run).start()
