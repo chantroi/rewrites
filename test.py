@@ -13,4 +13,4 @@ def get():
 Thread(target=get).start()
 
 while True:
-    deliver(input("Deliver: "))
+    deliver.send(input("Deliver: "))
