@@ -1,7 +1,7 @@
 from quart import Quart, request, make_response
 from quart_cors import cors
 from util.sse import ServerSentEvent
-from rmq import Consumer, publish
+from util.mq import Consumer, publish
 from threading import Thread
 
 app = Quart(__name__)
