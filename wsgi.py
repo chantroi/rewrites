@@ -4,6 +4,14 @@ from rmq import start_mq, consumer, deliver
 app = Flask(__name__)
 start_mq()
 
+def test_chunk():
+    import time
+    while True:
+        yield time.now()
+        time.sleep(5)
+
+@app.route("/")
+def home("/"):
 
 @app.route("/consumer")
 def consumer_rt():
