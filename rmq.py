@@ -3,8 +3,9 @@ import functools
 import pika
 from pika import DeliveryMode
 from pika.exchange_type import ExchangeType
+from env import mq_url
 
-parameters = pika.URLParameters("amqp://bosuutap:Tlc_1000@rabbitmq-bosuutap.alwaysdata.net:5672/bosuutap_0")
+parameters = pika.URLParameters(mq_url)
 
 class Consumer:
     def __init__(self):
