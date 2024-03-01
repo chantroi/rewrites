@@ -1,5 +1,5 @@
-git+https://github.com/hydrogram/hydrogram/archive/dev.zip
 requests
+hydrogram
 tgcrypto
 FastAPI
 pika
