@@ -33,5 +33,5 @@ class MQ:
     def get(self):
         while True:
             if self.value:
-                yield self.value
+                yield self.value.decode()
                 self.value = None
