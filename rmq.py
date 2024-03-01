@@ -3,6 +3,7 @@ import pika
 from pika import DeliveryMode
 from pika.exchange_type import ExchangeType
 from env import mq_url
+from threading import Thread
 
 parameters = pika.URLParameters(mq_url)
 
@@ -49,3 +50,17 @@ class Deliver:
 
     def send(self, data):
         self.channel.basic_publish('mq', 'standard_key', data, pika.BasicProperties(content_type='text/plain', delivery_mode=DeliveryMode.Transient))
+        
+def rmq():
+    deliver = Deliver()
+    consumer = Consumer()
+    Thread(target=consumer.run).start()
+    Thread(target=deliver.run).start()
+    def send(data):
+        try:
+            deliver.send(data)
+            return True
+        except Exception:
+            return False
+    def get():
+        return consumer.get()
