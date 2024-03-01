@@ -17,15 +17,16 @@ class MQ:
         self.channel.basic_qos(prefetch_count=1)
         on_message_callback = functools.partial(self.on_message, userdata='on_message_userdata')
         self.channel.basic_consume('standard', on_message_callback)
+        try:
+            self.channel.start_consuming()
+        except KeyboardInterrupt:
+            self.channel.stop_consuming()
         
     def run(self):
         credentials = pika.PlainCredentials(mq_user, mq_pw)
         parameters = pika.ConnectionParameters(mq_host, 5672, mq_vhost, credentials=credentials)
         self.connection = AsyncioConnection(parameters, on_open_callback=self.on_open)
-        try:
-            self.channel.start_consuming()
-        except KeyboardInterrupt:
-            self.channel.stop_consuming()
+     
         self.connection.ioloop.run_forever()
         #self.connection.close()
     
