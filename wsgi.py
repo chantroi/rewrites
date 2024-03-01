@@ -20,4 +20,4 @@ def producer_rt():
     data = request.args.get('data') or request.form.get('data')
     if data:
         deliver.send(data)
-    return redirect("/")
+    return "Done"
