@@ -1,9 +1,14 @@
 from fastapi import FastAPI
 from fastapi.responses import StreamingResponse, RedirectResponse
-from rmq import start_mq, consumer, deliver
+from rmq import Consumer, Deliver
+from threading import Thread
 
 app = FastAPI()
-start_mq()
+consumer = Consumer()
+deliver = Deliver()
+Thread(target=consumer.run).start()
+Thread(target=deliver.run).start()
+
 
 @app.get("/")
 async def home():
