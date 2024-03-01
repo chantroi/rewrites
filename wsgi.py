@@ -13,7 +13,7 @@ Thread(target=consumer.run).start()
 def home():
     return "Ok"
     
-@app.route("/consumer")
+@app.route("/sse")
 def consumer_rt():
     def event_source():
         for chunk in consumer.get():
