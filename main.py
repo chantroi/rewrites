@@ -13,7 +13,7 @@ Thread(target=consumer.run).start()
 async def home():
     return "OK"
 
-@app.get("/event")
+@app.get("/sse")
 async def sse():
     async def send_events():
         data = consumer.get()
