@@ -11,8 +11,9 @@ def test_chunk():
         time.sleep(5)
 
 @app.route("/")
-def home("/"):
-
+def home():
+    return Response(test_chunk(), mimetype="text/plain")
+    
 @app.route("/consumer")
 def consumer_rt():
     return Response(consumer.get(), mimetype='text/plain')
