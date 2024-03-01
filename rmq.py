@@ -59,5 +59,9 @@ consumer = Consumer()
 deliver = Deliver()
 
 def start_mq():
-    Thread(target=consumer.run).start()
-    Thread(target=deliver.run).start()
+    t1 = Thread(target=consumer.run)
+    t1.start()
+    t1.join()
+    t2 = Thread(target=deliver.run)
+    t2.start()
+    t2.join()
