@@ -4,3 +4,5 @@ tgcrypto
 FastAPI
 pika
 uvicorn
+Flask
+gunicorn
