@@ -37,12 +37,10 @@ class Consumer:
         yield "Start consuming"
         yield "Ready"
         yield "Waiting new message..."
-        while True:
-            if self.data:
-                yield "\n\n"
-                yield self.data.decode()
-                self.data = None
-            continue
+        if self.data:
+            yield "\n\n"
+            yield self.data.decode()
+            self.data = None
 
 class Deliver:
     def __init__(self):
