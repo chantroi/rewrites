@@ -1,16 +1,16 @@
 from flask import Flask, Response, redirect, request
-from rmq import MQ
+from rmq import start_mq, consumer, deliver
 
 app = Flask(__name__)
-MQ.start()
+start_mq()
 
 @app.route("/")
 def home():
-    return Response(MQ.get(), mimetype='text/plain')
+    return Response(consumer.get(), mimetype='text/plain')
 
 @app.route("/producer", methods=["GET", "POST"])
 def producer():
     data = request.args.get('data') or request.form.get('data')
     if data:
-        MQ.send(data)
+        deliver.send(data)
     return redirect("/")
