@@ -6,6 +6,10 @@ from env import mq_host, mq_user, mq_pw, mq_vhost
     
 class MQ:
     def __init__(self):
+        self.connection = None
+        self.channel = None
+        
+    def run(self):
         credentials = pika.PlainCredentials(mq_user, mq_pw)
         parameters = pika.ConnectionParameters(mq_host, 5672, mq_vhost, credentials=credentials)
         self.connection = pika.SelectConnection(parameters)
