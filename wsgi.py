@@ -4,7 +4,6 @@ from threading import Thread
 
 app = Flask(__name__)
 consumer = Consumer()
-deliver = Deliver()
 Thread(target=consumer.run).start()
 
 @app.route("/")
@@ -18,6 +17,6 @@ def consumer_rt():
 @app.route("/producer", methods=["GET", "POST"])
 def producer_rt():
     data = request.args.get('data') or request.form.get('data')
-    if data:
-        deliver.send(data)
+    deliver = Deliver()
+    deliver.send_text(data)
     return "Done"
