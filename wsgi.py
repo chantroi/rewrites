@@ -18,7 +18,7 @@ def consumer_rt():
         while True:
             if consumer.get():
                 yield consumer.get()
-    return Response(generator(), mimetype='text/plain')
+    return Response(generator(), mimetype='text/event-stream')
 
 @app.route("/producer", methods=["GET", "POST"])
 def producer_rt():
