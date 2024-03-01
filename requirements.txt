@@ -2,9 +2,9 @@ requests
 hydrogram
 tgcrypto
 pika
+gunicorn
 hypercorn
 Flask
 Quart
-gunicorn
 flask-cors
 quart-cors
