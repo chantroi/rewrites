@@ -34,7 +34,8 @@ class Consumer:
         self.connection.close()
         
     def get(self):
-        #yield "Start consuming"
+        yield "Start consuming"
+        yield "Ready"
         while True:
             if self.data:
                 yield self.data.decode()
