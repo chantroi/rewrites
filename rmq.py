@@ -65,3 +65,4 @@ def start_mq():
     t2 = Thread(target=deliver.run)
     t2.start()
     t2.join()
+    return
