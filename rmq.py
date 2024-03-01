@@ -48,6 +48,4 @@ class Deliver:
         self.channel.exchange_declare(exchange="self", exchange_type=ExchangeType.direct, passive=False, durable=True, auto_delete=True)
 
     def send(self, data):
-        channel = self.connection.channel()
-        channel.exchange_declare(exchange="exchange", exchange_type=ExchangeType.direct, passive=False, durable=True, auto_delete=True)
-        channel.basic_publish('exchange', 'standard_key', data, pika.BasicProperties(content_type='text/plain', delivery_mode=DeliveryMode.Transient))
+        self.channel.basic_publish('exchange', 'standard_key', data, pika.BasicProperties(content_type='text/plain', delivery_mode=DeliveryMode.Transient))
