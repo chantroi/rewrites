@@ -9,7 +9,7 @@ mq_vhost = getenv("MQ_VHOST")
 
 class Secret:
     def __init__(self):
-        res = requests.get(secret).json
+        res = requests.get(secret).json()
         self.api_id = res['key'].get('api_id')
         self.api_hash = res['key'].get('api_hash')
         self.bot_token = res['bot'].get('nw_tg')
