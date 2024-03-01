@@ -1,5 +1,5 @@
 from flask import Flask, Response, redirect, request
-from rMQ import MQ
+from rmq import MQ
 
 app = Flask(__name__)
 MQ.start()
