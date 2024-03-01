@@ -1,5 +1,5 @@
 from flask import Flask, redirect, request, make_response
-from util.rmq import Consumer, publish
+from util.mq import Consumer, publish
 from util.sse import ServerSentEvent
 from threading import Thread
 from flask_cors import CORS
