@@ -18,4 +18,4 @@ def consumer_rt():
 def producer_rt():
     data = request.args.get('data') or request.form.get('data')
     publish(data)
-    return "Done"
+    return {"status": "OK", "message": data}
