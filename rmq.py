@@ -37,7 +37,9 @@ class Consumer:
         yield "Start consuming"
         yield "Ready"
         while True:
+            yield "Waiting....."
             if self.data:
+                yield "\n\n"
                 yield self.data.decode()
                 self.data = None
 
