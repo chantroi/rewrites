@@ -64,3 +64,4 @@ def rmq():
             return False
     def get():
         return consumer.get()
+    return send, get
