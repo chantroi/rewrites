@@ -1,9 +1,10 @@
 from flask import Flask, Response, redirect, request
 from rmq import MQ
+from threading import Thread
 
 app = Flask(__name__)
 mq = MQ()
-mq.run()
+Thread(target=mq.run).start()
 
 @app.route("/")
 def home():
