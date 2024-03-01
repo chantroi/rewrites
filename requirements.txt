@@ -6,3 +6,4 @@ pika
 uvicorn
 Flask
 gunicorn
+flask-cors
