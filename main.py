@@ -10,7 +10,7 @@ Thread(target=consumer.run).start()
 
 @app.get("/")
 async def home():
-    return StreamingResponse(consumer.get(), mimetype='text/plain')
+    return StreamingResponse(consumer.get(), mimetype='text/event-stream')
     
 @app.route("/producer", methods=["GET", "POST"])
 async def producer(data: str):
