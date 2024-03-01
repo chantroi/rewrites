@@ -34,13 +34,10 @@ class Consumer:
         self.connection.close()
         
     def get(self):
-        yield "Start consuming"
-        yield "Ready"
-        yield "Waiting new message..."
         if self.data:
-            yield "\n\n"
-            yield self.data.decode()
+            data = self.data
             self.data = None
+            return data.decode()
 
 class Deliver:
     def __init__(self):
