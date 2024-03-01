@@ -1,8 +1,12 @@
 from flask import Flask, Response, redirect, request
-from rmq import start_mq, consumer, deliver
+from rmq import Consumer, Deliver
+from threading import Thread
 
 app = Flask(__name__)
-start_mq()
+consumer = Consumer()
+deliver = Deliver()
+Thread(target=consumer.run).start()
+Thread(target=deliver.run).start()
 
 def test_chunk():
     import time
