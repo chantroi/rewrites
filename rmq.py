@@ -17,9 +17,9 @@ class MQ:
         
         on_message_callback = functools.partial(self.on_message, userdata='on_message_userdata')
         self.channel.basic_consume('standard', on_message_callback)
+        self.connection.ioloop.run_forever()
         
     def run(self):
-        self.connection.ioloop.run_forever()
         try:
             self.channel.start_consuming()
         except KeyboardInterrupt:
