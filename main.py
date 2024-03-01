@@ -27,6 +27,7 @@ async def sse():
             'Content-Type': 'text/event-stream',
             'Cache-Control': 'no-cache',
             'Transfer-Encoding': 'chunked',
+            'Event-Source': 'Tran Khanh Han'
         },
     )
     response.timeout = None
