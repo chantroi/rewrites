@@ -34,12 +34,10 @@ class Consumer:
         self.connection.close()
         
     def get(self):
-        yield "Online \n"
-        yield "Start listening..."
+        yield "data: Start listening..."
         while True:
             for value in self.data:
-                yield "\n"
-                yield value.decode()
+                yield "data: " + value.decode()
                 self.data.remove(value)
 
 def publish(data):
