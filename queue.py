@@ -26,7 +26,7 @@ class MQ:
             self.channel.stop_consuming()
         self.connection.close()
         
-    def consume(self):
+    def get(self):
         while True:
             if self.value:
                 yield self.value
