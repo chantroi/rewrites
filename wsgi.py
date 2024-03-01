@@ -1,5 +1,6 @@
-from flask import Flask, Response, redirect, request
-from rmq import Consumer, publish
+from flask import Flask, redirect, request, make_response
+from util.rmq import Consumer, publish
+from util.sse import ServerSentEvent
 from threading import Thread
 from flask_cors import CORS
 
@@ -14,7 +15,21 @@ def home():
     
 @app.route("/consumer")
 def consumer_rt():
-    return Response(consumer.get(), mimetype='text/event-stream')
+    def event_source():
+        for chunk in consumer.get():
+            event = ServerSentEvent(chunk)
+            yield event.encode()
+    response = make_response(
+        event_source(),
+        {
+            'Content-Type': 'text/event-stream; charset=utf-8',
+            'Cache-Control': 'no-cache',
+            'Transfer-Encoding': 'chunked',
+            'Event-Source': 'Tran Khanh Han'
+        },
+    )
+        
+    return response
 
 @app.route("/producer", methods=["GET", "POST"])
 def producer_rt():
