@@ -8,7 +8,7 @@ class MQ:
     def __init__(self):
         credentials = pika.PlainCredentials(mq_user, mq_pw)
         parameters = pika.ConnectionParameters(mq_host, 5672, mq_vhost, credentials=credentials)
-        self.connection = pika.SelectConnection(parameters)
+        self.connection = pika.BlockingConnection(parameters)
         self.channel = self.connection.channel()
         self.channel.queue_bind(queue='standard', exchange='consume', routing_key='standard_key')
         self.channel.basic_qos(prefetch_count=1)
