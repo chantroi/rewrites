@@ -1,3 +1,6 @@
 git+https://github.com/hydrogram/hydrogram/archive/dev.zip
 requests
 tgcrypto
+FastAPI
+pika
+uvicorn
