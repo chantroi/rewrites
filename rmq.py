@@ -10,6 +10,8 @@ class MQ:
         credentials = pika.PlainCredentials(mq_user, mq_pw)
         parameters = pika.ConnectionParameters(mq_host, 5672, mq_vhost, credentials=credentials)
         self.connection = AsyncioConnection(parameters, on_open_callback=self.on_open)
+        self.value = None
+        self.channel = None
         
     def on_open(self):
         self.channel = self.connection.channel()
