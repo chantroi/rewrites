@@ -38,6 +38,7 @@ class Consumer:
         yield "Start listening..."
         while True:
             for value in self.data:
+                yield "\n"
                 yield value.decode()
                 self.data.remove(value)
 
