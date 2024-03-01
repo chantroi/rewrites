@@ -56,7 +56,7 @@ consumer = Consumer()
 
 class MQ:
     @staticmethod
-    def run():
+    def start():
         Thread(target=consumer.run).start()
         Thread(target=deliver.run).start()
         
