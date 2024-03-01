@@ -19,6 +19,7 @@ class MQ:
         self.channel.basic_consume('standard', on_message_callback)
         
     def run(self):
+        self.connection.ioloop.run_forever()
         try:
             self.channel.start_consuming()
         except KeyboardInterrupt:
