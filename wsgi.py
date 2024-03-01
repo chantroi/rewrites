@@ -5,6 +5,7 @@ from threading import Thread
 app = Flask(__name__)
 consumer = Consumer()
 deliver = Deliver()
+Thread(target=consumer.run).start()
 
 @app.route("/")
 def home():
@@ -20,6 +21,3 @@ def producer_rt():
     if data:
         deliver.send(data)
     return redirect("/")
-    
-Thread(target=consumer.run).start()
-Thread(target=deliver.run).start()
