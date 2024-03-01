@@ -1,4 +1,4 @@
-from quart import Quart, Response
+from quart import Quart, Response, request
 from quart_cors import cors
 from rmq import Consumer, publish
 from threading import Thread
@@ -14,9 +14,10 @@ async def home():
 
 @app.get("/consumer")
 async def consumer_rt():
-    return StreamingResponse(consumer.get(), mimetype='text/event-stream')
+    return Response(consumer.get(), mimetype='text/event-stream')
     
 @app.route("/producer", methods=["GET", "POST"])
-async def producer_rt(data: str):
+async def producer_rt():
+    data = request.args.get("data")
     publish(data)
     return {"status": "OK", "message": data}
