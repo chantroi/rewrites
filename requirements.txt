@@ -1,9 +1,10 @@
 requests
 hydrogram
 tgcrypto
-FastAPI
 pika
-uvicorn
+hypercorn
 Flask
+Quart
 gunicorn
 flask-cors
+quart-cors
