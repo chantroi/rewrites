@@ -14,14 +14,7 @@ class MQ:
         #channel.queue_declare(queue='standard', auto_delete=True)
         self.channel.queue_bind(queue='standard', exchange='consume', routing_key='standard_key')
         self.channel.basic_qos(prefetch_count=1)
-    
-    def on_message(self, chan, method_frame, header_frame, body, userdata=None):
-        self.value = body
         
-    def send(self, data):
-        self.channel.basic_publish('exchange', 'standard_key', data, pika.BasicProperties(content_type='text/plain', delivery_mode=DeliveryMode.Transient))
-        
-    def run(self):
         on_message_callback = functools.partial(self.on_message, userdata='on_message_userdata')
         self.channel.basic_consume('standard', on_message_callback)
         try:
@@ -29,6 +22,12 @@ class MQ:
         except KeyboardInterrupt:
             self.channel.stop_consuming()
         self.connection.close()
+    
+    def on_message(self, chan, method_frame, header_frame, body, userdata=None):
+        self.value = body
+        
+    def send(self, data):
+        self.channel.basic_publish('exchange', 'standard_key', data, pika.BasicProperties(content_type='text/plain', delivery_mode=DeliveryMode.Transient))
         
     def get(self):
         while True:
