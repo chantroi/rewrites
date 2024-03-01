@@ -17,7 +17,7 @@ class Consumer:
     
     def run(self):
         self.channel = self.connection.channel()
-        self.channel.exchange_declare(exchange="self", exchange_type=ExchangeType.direct, passive=False, durable=True, auto_delete=True)
+        self.channel.exchange_declare(exchange="mq", exchange_type=ExchangeType.direct, passive=False, durable=True, auto_delete=True)
         self.channel.queue_declare(queue='standard', auto_delete=True)
         self.channel.queue_bind(queue='standard', exchange='mq', routing_key='standard_key')
         self.channel.basic_qos(prefetch_count=1)
