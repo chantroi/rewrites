@@ -18,7 +18,7 @@ def consumer_rt():
     def event_source():
         for chunk in consumer.get():
             event = ServerSentEvent(chunk)
-            yield str({"message": event.encode()})
+            yield event.encode()
             
     response = make_response(
         event_source(),
