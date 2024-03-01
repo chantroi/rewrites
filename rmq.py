@@ -1,4 +1,3 @@
-"""Basic message consumer example"""
 import functools
 import pika
 from pika import DeliveryMode
