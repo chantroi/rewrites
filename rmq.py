@@ -22,11 +22,11 @@ class MQ:
         credentials = pika.PlainCredentials(mq_user, mq_pw)
         parameters = pika.ConnectionParameters(mq_host, 5672, mq_vhost, credentials=credentials)
         self.connection = AsyncioConnection(parameters, on_open_callback=self.on_open)
+        try:
+            self.channel.start_consuming()
+        except KeyboardInterrupt:
+            self.channel.stop_consuming()
         self.connection.ioloop.run_forever()
-        # try:
-#             self.channel.start_consuming()
-#         except KeyboardInterrupt:
-#             self.channel.stop_consuming()
         #self.connection.close()
     
     def on_message(self, chan, method_frame, header_frame, body, userdata=None):
