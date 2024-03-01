@@ -36,8 +36,8 @@ class Consumer:
     def get(self):
         yield "Start consuming"
         yield "Ready"
+        yield "Waiting new message..."
         while True:
-            yield "Waiting....."
             if self.data:
                 yield "\n\n"
                 yield self.data.decode()
