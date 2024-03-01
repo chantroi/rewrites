@@ -1,5 +1,6 @@
 import pika
 import functools
+from pika import DeliveryMode
 from pika.exchange_type import ExchangeType
 from env import mq_host, mq_user, mq_pw, mq_vhost
     
@@ -16,6 +17,9 @@ class MQ:
     
     def on_message(self, chan, method_frame, header_frame, body, userdata=None):
         self.value = body
+        
+    def proc(self, data):
+        self.channel.basic_publish('exchange', 'standard_key', data, pika.BasicProperties(content_type='text/plain', delivery_mode=DeliveryMode.Transient))
         
     def run(self):
         on_message_callback = functools.partial(self.on_message, userdata='on_message_userdata')
