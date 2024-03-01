@@ -36,8 +36,9 @@ class Consumer:
     def get(self):
         yield "data: Start listening..."
         while True:
-            yield "data: " + self.data.decode()
-            self.data = None
+            if self.data:
+                yield "data: " + self.data.decode()
+                self.data = None
 
 def publish(data):
     connection = pika.BlockingConnection(parameters)
