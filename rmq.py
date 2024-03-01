@@ -59,9 +59,11 @@ class MQ:
     def start():
         Thread(target=consumer.run).start()
         Thread(target=deliver.run).start()
-        
+    
+    @staticmethod
     def send(data):
         return deliver.send(data)
-            
+    
+    @staticmethod
     def get():
         return consumer.get()
