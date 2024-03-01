@@ -1,5 +1,5 @@
 from flask import Flask, Response, redirect, request
-from rmq import Consumer, Deliver
+from rmq import Consumer, publish
 from threading import Thread
 
 app = Flask(__name__)
@@ -17,6 +17,5 @@ def consumer_rt():
 @app.route("/producer", methods=["GET", "POST"])
 def producer_rt():
     data = request.args.get('data') or request.form.get('data')
-    deliver = Deliver()
-    deliver.send_text(data)
+    publish(data)
     return "Done"
