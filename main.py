@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.responses import StreamingResponse, RedirectResponse
-from queue import MQ
+from rmq import MQ
 
 app = FastAPI()
 mq = MQ()
