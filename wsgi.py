@@ -1,8 +1,10 @@
 from flask import Flask, Response, redirect, request
 from rmq import Consumer, publish
 from threading import Thread
+from flask_cors import CORS
 
 app = Flask(__name__)
+CORS(app, origins="*")
 consumer = Consumer()
 Thread(target=consumer.run).start()
 
