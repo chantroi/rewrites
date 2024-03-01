@@ -5,11 +5,9 @@ consumer = Consumer()
 deliver = Deliver()
 Thread(target=consumer.run).start()
 
-def get():
-    for i in consumer.get():
-        print("Consumer:", i)
-       
-Thread(target=get).start()
-
 while True:
-    deliver.send(input("Deliver: "))
+    text = input("CMD:")
+    if text.startswith("c:"):
+        print(next(consumer.get()))
+    else:
+        deliver.send(input("Deliver: "))
