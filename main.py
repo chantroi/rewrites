@@ -1,5 +1,6 @@
-from quart import Quart, Response, request
+from quart import Quart, request, make_response
 from quart_cors import cors
+from util.sse import ServerSentEvent
 from rmq import Consumer, publish
 from threading import Thread
 
@@ -12,9 +13,24 @@ Thread(target=consumer.run).start()
 async def home():
     return "OK"
 
-@app.get("/consumer")
-async def consumer_rt():
-    return Response(consumer.get(), mimetype='text/event-stream')
+@app.get("/sse")
+async def sse():
+    async def send_events():
+        while True:
+            data = consumer.get()
+            event = ServerSentEvent(data)
+            yield event.encode()
+            
+    response = await make_response(
+        send_events(),
+        {
+            'Content-Type': 'text/event-stream',
+            'Cache-Control': 'no-cache',
+            'Transfer-Encoding': 'chunked',
+        },
+    )
+    response.timeout = None
+    return response
     
 @app.route("/producer", methods=["GET", "POST"])
 async def producer_rt():
