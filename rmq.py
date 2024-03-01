@@ -15,7 +15,7 @@ class Consumer:
     def on_message(self, chan, method_frame, header_frame, body, userdata=None):
         self.data = body
         chan.basic_ack(delivery_tag=method_frame.delivery_tag)
-    
+   
     def run(self):
         self.channel = self.connection.channel()
         self.channel.exchange_declare(exchange="mq", exchange_type=ExchangeType.direct, passive=False, durable=True, auto_delete=True)
