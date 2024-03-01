@@ -18,7 +18,7 @@ class MQ:
     def on_message(self, chan, method_frame, header_frame, body, userdata=None):
         self.value = body
         
-    def proc(self, data):
+    def send(self, data):
         self.channel.basic_publish('exchange', 'standard_key', data, pika.BasicProperties(content_type='text/plain', delivery_mode=DeliveryMode.Transient))
         
     def run(self):
