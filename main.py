@@ -16,10 +16,11 @@ async def home():
 @app.get("/event")
 async def sse():
     async def send_events():
+        data = consumer.get()
         while True:
-            data = consumer.get()
-            event = ServerSentEvent(data)
-            yield event.encode()
+            if data:
+                event = ServerSentEvent(data)
+                yield event.encode()
             
     response = await make_response(
         send_events(),
