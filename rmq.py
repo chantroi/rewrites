@@ -58,6 +58,6 @@ class Deliver:
 consumer = Consumer()
 deliver = Deliver()
 
-def start():
+def start_mq():
     Thread(target=consumer.run).start()
     Thread(target=deliver.run).start()
