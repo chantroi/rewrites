@@ -4,7 +4,7 @@ from rmq import MQ
 
 app = FastAPI()
 mq = MQ()
-mq.run()
+mq.start()
 
 @app.get("/")
 async def home():
