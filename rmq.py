@@ -10,10 +10,10 @@ parameters = pika.URLParameters(mq_url)
 class Consumer:
     def __init__(self):
         self.connection = pika.BlockingConnection(parameters)
-        self.data = []
+        self.data = None
         
     def on_message(self, chan, method_frame, header_frame, body, userdata=None):
-        self.data.append(body)
+        self.data = body
         chan.basic_ack(delivery_tag=method_frame.delivery_tag)
    
     def run(self):
@@ -38,7 +38,7 @@ class Consumer:
         while True:
             for value in self.data:
                 yield "data: " + value.decode()
-                self.data.remove(value)
+                self.data = None
 
 def publish(data):
     connection = pika.BlockingConnection(parameters)
