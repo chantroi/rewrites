@@ -1,8 +1,7 @@
 from rmq import start_mq, consumer, deliver
+from threading import Thread
 
 start_mq()
-
-from threading import Thread
 
 def get():
     for i in consumer.get():
