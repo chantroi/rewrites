@@ -5,7 +5,6 @@ from threading import Thread
 
 app = FastAPI()
 consumer = Consumer()
-deliver = Deliver()
 Thread(target=consumer.run).start()
 
 @app.get("/")
@@ -18,5 +17,6 @@ async def consumer_rt():
     
 @app.route("/producer", methods=["GET", "POST"])
 async def producer_rt(data: str):
+    deliver = Deliver()
     deliver.send(data)
     return "Done"
