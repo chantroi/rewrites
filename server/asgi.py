@@ -19,7 +19,7 @@ async def sse():
         data = consumer.get()
         for chunk in data:
             event = ServerSentEvent(chunk)
-            yield  str({"message": event.encode()})
+            yield str({"message": event.encode()})
             
     response = await make_response(
         send_events(),
