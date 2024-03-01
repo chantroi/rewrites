@@ -46,5 +46,5 @@ class Deliver:
         self.connection = pika.BlockingConnection(parameters)
         self.channel = self.connection.channel()
         
-    def send(self, data):
+    def send_text(self, data):
         self.channel.basic_publish('mq', 'standard_key', data, pika.BasicProperties(content_type='text/plain', delivery_mode=DeliveryMode.Transient))
