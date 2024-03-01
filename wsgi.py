@@ -13,12 +13,7 @@ def home():
     
 @app.route("/consumer")
 def consumer_rt():
-    def generator():
-        yield "Start listening"
-        while True:
-            if consumer.get():
-                yield consumer.get()
-    return Response(generator(), mimetype='text/event-stream')
+    return Response(consumer.get(), mimetype='text/event-stream')
 
 @app.route("/producer", methods=["GET", "POST"])
 def producer_rt():
