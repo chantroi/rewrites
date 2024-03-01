@@ -6,21 +6,17 @@ from env import mq_host, mq_user, mq_pw, mq_vhost
     
 class MQ:
     def __init__(self):
-        self.connection = None
-        self.channel = None
-        
-    def run(self):
         credentials = pika.PlainCredentials(mq_user, mq_pw)
         parameters = pika.ConnectionParameters(mq_host, 5672, mq_vhost, credentials=credentials)
         self.connection = pika.SelectConnection(parameters)
         self.channel = self.connection.channel()
-        #channel.exchange_declare(exchange='consume', exchange_type=ExchangeType.direct, passive=False, durable=True, auto_delete=False)
-        #channel.queue_declare(queue='standard', auto_delete=True)
         self.channel.queue_bind(queue='standard', exchange='consume', routing_key='standard_key')
         self.channel.basic_qos(prefetch_count=1)
         
         on_message_callback = functools.partial(self.on_message, userdata='on_message_userdata')
         self.channel.basic_consume('standard', on_message_callback)
+        
+    def run(self):
         try:
             self.channel.start_consuming()
         except KeyboardInterrupt:
