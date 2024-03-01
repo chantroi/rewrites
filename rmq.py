@@ -9,9 +9,6 @@ class MQ:
     def __init__(self):
         self.value = None
         self.channel = None
-        credentials = pika.PlainCredentials(mq_user, mq_pw)
-        parameters = pika.ConnectionParameters(mq_host, 5672, mq_vhost, credentials=credentials)
-        self.connection = AsyncioConnection(parameters, on_open_callback=self.on_open)
         
     def on_open(self):
         self.channel = self.connection.channel()
@@ -22,6 +19,9 @@ class MQ:
         self.channel.basic_consume('standard', on_message_callback)
         
     def run(self):
+        credentials = pika.PlainCredentials(mq_user, mq_pw)
+        parameters = pika.ConnectionParameters(mq_host, 5672, mq_vhost, credentials=credentials)
+        self.connection = AsyncioConnection(parameters, on_open_callback=self.on_open)
         self.connection.ioloop.run_forever()
         # try:
 #             self.channel.start_consuming()
