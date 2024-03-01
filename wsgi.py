@@ -8,15 +8,9 @@ deliver = Deliver()
 Thread(target=consumer.run).start()
 Thread(target=deliver.run).start()
 
-def test_chunk():
-    import time
-    while True:
-        yield "Online"
-        time.sleep(5)
-
 @app.route("/")
 def home():
-    return Response(test_chunk(), mimetype="text/plain")
+    return "Ok"
     
 @app.route("/consumer")
 def consumer_rt():
