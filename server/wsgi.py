@@ -1,4 +1,4 @@
-from flask import Flask, redirect, request, make_response
+from flask import Flask, redirect, request, make_response, render_template
 from util.mq import Consumer, publish
 from util.sse import ServerSentEvent
 from threading import Thread
@@ -11,7 +11,7 @@ Thread(target=consumer.run).start()
 
 @app.route("/")
 def home():
-    return "Ok"
+    return render_template("index.html")
     
 @app.route("/sse")
 def consumer_rt():
