@@ -34,6 +34,8 @@ class Consumer:
         self.connection.close()
         
     def get(self):
+        yield "Online \n"
+        yield "Start listening..."
         while True:
             if self.data:
                 yield self.data.decode()
