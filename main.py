@@ -15,4 +15,4 @@ async def home():
 @app.route("/producer", methods=["GET", "POST"])
 async def producer(data: str):
     deliver.send(data)
-    return RedirectResponse("/")
+    return "Done"
