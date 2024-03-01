@@ -1,15 +1,15 @@
 from fastapi import FastAPI
 from fastapi.responses import StreamingResponse, RedirectResponse
-from rmq import MQ
+from rmq import start_mq, consumer, deliver
 
 app = FastAPI()
-MQ.start()
+start_mq()
 
 @app.get("/")
 async def home():
-    return StreamingResponse(MQ.get(), mimetype='text/plain')
+    return StreamingResponse(consumer.get(), mimetype='text/plain')
     
 @app.route("/producer", methods=["GET", "POST"])
 async def producer(data: str):
-    MQ.send(data)
+    deliver.send(data)
     return RedirectResponse("/")
