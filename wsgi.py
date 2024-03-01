@@ -4,7 +4,8 @@ from threading import Thread
 
 app = Flask(__name__)
 mq = MQ()
-Thread(target=mq.run).start()
+#Thread(target=mq.run).start()
+mq.run()
 
 @app.route("/")
 def home():
