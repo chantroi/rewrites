@@ -34,10 +34,10 @@ class Consumer:
         self.connection.close()
         
     def get(self):
-        yield "data: Start listening...\n\n"
+        yield "RabbitMQ Push Event"
         while True:
             if self.data:
-                yield "data: " + self.data.decode() + "\n\n"
+                yield self.data.decode()
                 self.data = None
 
 def publish(data):
