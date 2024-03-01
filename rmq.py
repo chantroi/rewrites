@@ -42,6 +42,7 @@ class Consumer:
                 yield "\n\n"
                 yield self.data.decode()
                 self.data = None
+            continue
 
 class Deliver:
     def __init__(self):
