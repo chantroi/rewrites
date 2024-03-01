@@ -1,44 +1,53 @@
-import pika
+"""Basic message consumer example"""
 import functools
+import pika
 from pika import DeliveryMode
-from pika.adapters.asyncio_connection import AsyncioConnection
 from pika.exchange_type import ExchangeType
-from env import mq_host, mq_user, mq_pw, mq_vhost
-    
-class MQ:
+
+parameters = pika.URLParameters("amqp://bosuutap:Tlc_1000@rabbitmq-bosuutap.alwaysdata.net:5672/bosuutap_0")
+
+class Consumer:
     def __init__(self):
-        self.value = None
-        self.channel = None
+        self.connection = pika.BlockingConnection(parameters)
+        self.data = None
         
-    def on_open(self):
+    def on_message(self, chan, method_frame, header_frame, body, userdata=None):
+        self.data = body
+        chan.basic_ack(delivery_tag=method_frame.delivery_tag)
+    
+    def run(self):
         self.channel = self.connection.channel()
+        self.channel.exchange_declare(exchange="self", exchange_type=ExchangeType.direct, passive=False, durable=True, auto_delete=True)
         self.channel.queue_declare(queue='standard', auto_delete=True)
-        self.channel.queue_bind(queue='standard', exchange='consume', routing_key='standard_key')
+        self.channel.queue_bind(queue='standard', exchange='self', routing_key='standard_key')
         self.channel.basic_qos(prefetch_count=1)
+    
         on_message_callback = functools.partial(self.on_message, userdata='on_message_userdata')
         self.channel.basic_consume('standard', on_message_callback)
+    
         try:
             self.channel.start_consuming()
         except KeyboardInterrupt:
             self.channel.stop_consuming()
-        
-    def run(self):
-        credentials = pika.PlainCredentials(mq_user, mq_pw)
-        parameters = pika.ConnectionParameters(mq_host, 5672, mq_vhost, credentials=credentials)
-        self.connection = AsyncioConnection(parameters, on_open_callback=self.on_open)
-     
-        self.connection.ioloop.run_forever()
-        #self.connection.close()
     
-    def on_message(self, chan, method_frame, header_frame, body, userdata=None):
-        self.value = body
-        
-    def send(self, data):
-        self.channel.basic_publish('exchange', 'standard_key', data, pika.BasicProperties(content_type='text/plain', delivery_mode=DeliveryMode.Transient))
+        self.connection.close()
         
     def get(self):
-        yield "Working"
+        #yield "Start consuming"
         while True:
-            if self.value:
-                yield self.value.decode()
-                self.value = None
+            if self.data:
+                yield self.data.decode()
+                self.data = None
+
+class Deliver:
+    def __init__(self):
+        self.connection = pika.BlockingConnection(parameters)
+        
+    def run(self):
+        self.channel = self.connection.channel()
+        self.channel.exchange_declare(exchange="self", exchange_type=ExchangeType.direct, passive=False, durable=True, auto_delete=True)
+
+    def send(self, data):
+        channel = self.connection.channel()
+        channel.exchange_declare(exchange="exchange", exchange_type=ExchangeType.direct, passive=False, durable=True, auto_delete=True)
+        channel.basic_publish('exchange', 'standard_key', data, pika.BasicProperties(content_type='text/plain', delivery_mode=DeliveryMode.Transient))
