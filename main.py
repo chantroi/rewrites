@@ -1,9 +1,17 @@
 from fastapi import FastAPI
 from fastapi.responses import StreamingResponse, RedirectResponse
+from fastapi.middleware.cors import CORSMiddleware
 from rmq import Consumer, publish
 from threading import Thread
 
 app = FastAPI()
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_credentials=True,
+    allow_methods=["GET", "POST", "PUT", "DELETE"],
+    allow_headers=["*"]
+)
 consumer = Consumer()
 Thread(target=consumer.run).start()
 
