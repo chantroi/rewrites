@@ -2,10 +2,7 @@ from os import getenv
 import requests
 
 secret = getenv("SECRET")
-mq_host = getenv("MQ_HOST")
-mq_user = getenv("MQ_USER")
-mq_pw = getenv("MQ_PW")
-mq_vhost = getenv("MQ_VHOST")
+mq_url = getenv("MQ_URL")
 
 class Secret:
     def __init__(self):
