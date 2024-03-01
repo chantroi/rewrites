@@ -42,10 +42,8 @@ class Consumer:
                 yield value.decode()
                 self.data.remove(value)
 
-class Deliver:
-    def __init__(self):
-        self.connection = pika.BlockingConnection(parameters)
-        self.channel = self.connection.channel()
-        
-    def send_text(self, data):
-        self.channel.basic_publish('mq', 'standard_key', data, pika.BasicProperties(content_type='text/plain', delivery_mode=DeliveryMode.Transient))
+def publish(data):
+    connection = pika.BlockingConnection(parameters)
+    channel = connection.channel()
+    channel.basic_publish('mq', 'standard_key', data, pika.BasicProperties(content_type='text/plain', delivery_mode=DeliveryMode.Transient))
+    connection.close()
