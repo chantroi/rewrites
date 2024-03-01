@@ -17,10 +17,9 @@ async def home():
 async def sse():
     async def send_events():
         data = consumer.get()
-        while True:
-            if data:
-                event = ServerSentEvent(data)
-                yield event.encode()
+        for chunk in data:
+            event = ServerSentEvent(chunk)
+            yield event.encode()
             
     response = await make_response(
         send_events(),
