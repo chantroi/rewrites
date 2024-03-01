@@ -18,4 +18,4 @@ async def consumer_rt():
 @app.route("/producer", methods=["GET", "POST"])
 async def producer_rt(data: str):
     publish(data)
-    return "Done"
+    return {"status": "OK", "message": data}
