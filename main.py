@@ -24,7 +24,7 @@ async def sse():
     response = await make_response(
         send_events(),
         {
-            'Content-Type': 'text/event-stream',
+            'Content-Type': 'text/event-stream; charset=utf-8',
             'Cache-Control': 'no-cache',
             'Transfer-Encoding': 'chunked',
             'Event-Source': 'Tran Khanh Han'
