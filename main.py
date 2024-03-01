@@ -18,5 +18,5 @@ async def consumer_rt():
 @app.route("/producer", methods=["GET", "POST"])
 async def producer_rt(data: str):
     deliver = Deliver()
-    deliver.send(data)
+    deliver.send_text(data)
     return "Done"
