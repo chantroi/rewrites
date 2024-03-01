@@ -54,20 +54,10 @@ class Deliver:
 
     def send(self, data):
         self.channel.basic_publish('mq', 'standard_key', data, pika.BasicProperties(content_type='text/plain', delivery_mode=DeliveryMode.Transient))
-        
+
 consumer = Consumer()
 deliver = Deliver()
 
-class MQ:
-    @staticmethod
-    def start():
-        Thread(target=consumer.run).start()
-        Thread(target=deliver.run).start()
-    
-    @staticmethod
-    def send(data):
-        return deliver.send(data)
-    
-    @staticmethod
-    def get():
-        return consumer.get()
+def start():
+    Thread(target=consumer.run).start()
+    Thread(target=deliver.run).start()
