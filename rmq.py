@@ -9,17 +9,18 @@ class MQ:
     def __init__(self):
         credentials = pika.PlainCredentials(mq_user, mq_pw)
         parameters = pika.ConnectionParameters(mq_host, 5672, mq_vhost, credentials=credentials)
-        self.connection = AsyncioConnection(parameters)
+        self.connection = AsyncioConnection(parameters, on_open_callback=self.on_open)
+        
+    def on_open(self):
         self.channel = self.connection.channel()
         self.channel.queue_declare(queue='standard', auto_delete=True)
         self.channel.queue_bind(queue='standard', exchange='consume', routing_key='standard_key')
         self.channel.basic_qos(prefetch_count=1)
-        
         on_message_callback = functools.partial(self.on_message, userdata='on_message_userdata')
         self.channel.basic_consume('standard', on_message_callback)
-        self.connection.ioloop.run_forever()
         
     def run(self):
+        self.connection.ioloop.run_forever()
         try:
             self.channel.start_consuming()
         except KeyboardInterrupt:
