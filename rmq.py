@@ -62,6 +62,7 @@ def rmq():
             return True
         except Exception:
             return False
+            
     def get():
         return consumer.get()
     return send, get
