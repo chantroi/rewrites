@@ -10,10 +10,10 @@ parameters = pika.URLParameters(mq_url)
 class Consumer:
     def __init__(self):
         self.connection = pika.BlockingConnection(parameters)
-        self.data = None
+        self.data = []
         
     def on_message(self, chan, method_frame, header_frame, body, userdata=None):
-        self.data = body
+        self.data.append(body)
         chan.basic_ack(delivery_tag=method_frame.delivery_tag)
    
     def run(self):
@@ -37,9 +37,9 @@ class Consumer:
         yield "Online \n"
         yield "Start listening..."
         while True:
-            if self.data:
-                yield self.data.decode()
-                self.data = None
+            for value in self.data:
+                yield value.decode()
+                self.data.remove(value)
 
 class Deliver:
     def __init__(self):
