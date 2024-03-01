@@ -7,8 +7,6 @@ app = FastAPI()
 consumer = Consumer()
 deliver = Deliver()
 Thread(target=consumer.run).start()
-Thread(target=deliver.run).start()
-
 
 @app.get("/")
 async def home():
