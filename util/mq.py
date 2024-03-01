@@ -34,7 +34,7 @@ class Consumer:
         self.connection.close()
         
     def get(self):
-        yield "RabbitMQ Push Event"
+        yield "<b>Trần Khánh Hân</b>"
         while True:
             if self.data:
                 yield self.data.decode()
