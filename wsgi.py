@@ -7,7 +7,7 @@ start_mq()
 def test_chunk():
     import time
     while True:
-        yield time.now()
+        yield "Online"
         time.sleep(5)
 
 @app.route("/")
