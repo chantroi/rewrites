@@ -46,13 +46,13 @@ class Deliver:
         
     def run(self):
         self.channel = self.connection.channel()
-        self.channel.exchange_declare(exchange="mq", exchange_type=ExchangeType.direct, passive=False, durable=True, auto_delete=True)
+        # self.channel.exchange_declare(exchange="mq", exchange_type=ExchangeType.direct, passive=False, durable=True, auto_delete=True)
 
     def send(self, data):
         self.channel.basic_publish('mq', 'standard_key', data, pika.BasicProperties(content_type='text/plain', delivery_mode=DeliveryMode.Transient))
         
-deliver = Deliver()
 consumer = Consumer()
+deliver = Deliver()
 
 class MQ:
     @staticmethod
