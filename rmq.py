@@ -34,6 +34,7 @@ class MQ:
         self.channel.basic_publish('exchange', 'standard_key', data, pika.BasicProperties(content_type='text/plain', delivery_mode=DeliveryMode.Transient))
         
     def get(self):
+        yield "Working"
         while True:
             if self.value:
                 yield self.value.decode()
