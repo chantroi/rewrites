@@ -80,7 +80,33 @@
         sseSource.onmessage = function(event) {
         const dataDiv = document.getElementById('chatBox');
         dataDiv.insertAdjacentHTML('beforeend', event.data + '<br>');
-    };
+        };
+        function sendMessage(event) {
+            const text = document.getElementById('messageInput').value;
+            const data = {
+                chat_id: 'share_v2ray_file',
+                text: text
+            };
+            const option = {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            };
+            const api = 'https://api.telegram.org/bot{{ bot_token }}/sendMessage';
+            fetch(api, option)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+            })
+            .then(data => {
+                console.log(data);
+            })
+            .catch(error => {
+                console.error('There was a problem with your fetch operation:', error);
+            });
     </script>
     
 </body>
