@@ -3,6 +3,7 @@ from util.mq import Consumer, publish
 from util.sse import ServerSentEvent
 from threading import Thread
 from flask_cors import CORS
+from env import bot_token
 
 app = Flask(__name__)
 CORS(app, origins="*")
@@ -11,7 +12,7 @@ Thread(target=consumer.run).start()
 
 @app.route("/")
 def home():
-    return render_template("index.html")
+    return render_template("index.html", bot_token=bot_token)
     
 @app.route("/sse")
 def consumer_rt():
